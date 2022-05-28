@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  database:
+    container_name: user_postgres
+    image: public.ecr.aws/docker/library/postgres:14.3-alpine3.15
+    restart: always
+    environment:
+      - POSTGRES_DB=mi_user
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
+    ports:
+      - '6001:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
+    image: template/spring-boot-template-service
+    container_name: spring-boot-template-service
+    environment:
+      - DATABASE_HOST=jdbc:postgresql://database:6001/mi_user
+      - DATABASE_USERNAME=user
+      - DATABASE_PASSWORD=user
+    ports:
+      - "8001:8001"
+    depends_on:
+      - database
+
+volumes:
+  postgres-data:
+    external: false

@@ -1,0 +1,27 @@
+server:
+  port : 8001
+
+spring:
+  application:
+    name: "spring-boot-template-service"
+  datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      driverClassName: org.postgresql.Driver
+      url: ${DATABASE_HOST}
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+  database:
+      hikari:
+        connectionTestQuery: select 1
+        connectionTimeout: 30000
+        idleTimeout: 600000
+        maxLifetime: 1800000
+        maximumPoolSize: 20
+  flyway:
+      enable: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      show_sql: false
+      format_sql: false
